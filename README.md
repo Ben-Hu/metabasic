@@ -25,8 +25,7 @@ db = Metabasic(domain, session_id="foo" database_id=1)
 db.query("SELECT * FROM bar")
 
 # Email/Password authentication
-ga = Metabasic(domain, database_id=2)
-ga.authenticate("foo@email.com", "password")
+ga = Metabasic(domain, database_id=2).authenticate("foo@email.com", "password")
 ga_query = {
     "ids": "ga:1234567890",
     "start-date": "30daysAgo",
@@ -39,6 +38,9 @@ ga_query = {
 ga.query(json.dumps(ga_query))
 
 # Select a database interactively
-m = Metabasic(domain, session_id="foo")
-m.select_database()
+m = (
+  Metabasic(domain)
+  .authenticate("foo@email.com", "password")
+  .select_database()
+)
 ```

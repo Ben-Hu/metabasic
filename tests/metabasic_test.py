@@ -53,7 +53,8 @@ class TestAuthenticate:
         mock_response.status_code = 200
         mocker.patch("requests.post", return_value=mock_response)
 
-        assert metabasic.authenticate("email", "password") is None
+        result = metabasic.authenticate("email", "password")
+        assert isinstance(result, Metabasic)
         assert metabasic.session_id == "abc123"
 
     def test_authenticate_error(self, mocker, metabasic):
@@ -78,8 +79,9 @@ class TestSelectDatabase:
         mocker.patch("requests.get", return_value=mock_response)
 
         mocker.patch("inquirer.prompt", return_value={"name": "foo"})
-        metabasic.select_database()
+        result = metabasic.select_database()
 
+        assert isinstance(result, Metabasic)
         assert metabasic.database_id == 1
 
     def test_select_database_error(self, mocker, metabasic):

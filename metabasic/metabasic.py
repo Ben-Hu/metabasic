@@ -60,7 +60,7 @@ class Metabasic(object):
 
         return resp.json()["data"]["rows"]
 
-    def authenticate(self, email: str, password: str) -> None:
+    def authenticate(self, email: str, password: str) -> "Metabasic":
         """Authenticates the client instance with the given email & password.
 
         Arguments:
@@ -79,7 +79,9 @@ class Metabasic(object):
 
         self.session_id = resp.json()["id"]
 
-    def select_database(self) -> None:
+        return self
+
+    def select_database(self) -> "Metabasic":
         """Start an interactive selection of available databases
 
         Raises:
@@ -104,6 +106,8 @@ class Metabasic(object):
         target = inquirer.prompt(prompt)
 
         self.database_id = databases[target["name"]]
+
+        return self
 
     def __check_auth(self):
         if not self.session_id:
