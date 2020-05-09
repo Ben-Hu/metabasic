@@ -5,6 +5,9 @@ Dead simple client for interacting with the Metabase dataset API
 .. image :: https://circleci.com/gh/Ben-Hu/metabasic.svg?style=svg
   :target: https://circleci.com/gh/Ben-Hu/metabasic
 
+.. image :: https://github.com/Ben-Hu/metabasic/workflows/ci/badge.svg
+  :target: https://github.com/Ben-Hu/metabasic/actions
+
 .. image :: https://codecov.io/gh/Ben-Hu/metabasic/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/Ben-Hu/metabasic
 
