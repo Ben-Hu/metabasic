@@ -85,7 +85,7 @@ database_id (Optional[int]): The metabase database id.</p>
 </dl>
 <dl class="py method">
 <dt id="metabasic.metabasic.Metabasic.authenticate">
-<code class="sig-name descname">authenticate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">email</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></span></em>, <em class="sig-param"><span class="n">password</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)">None</a><a class="reference internal" href="../_modules/metabasic/metabasic.html#Metabasic.authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metabasic.metabasic.Metabasic.authenticate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">authenticate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">email</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></span></em>, <em class="sig-param"><span class="n">password</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#metabasic.metabasic.Metabasic" title="metabasic.metabasic.Metabasic">metabasic.metabasic.Metabasic</a><a class="reference internal" href="../_modules/metabasic/metabasic.html#Metabasic.authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metabasic.metabasic.Metabasic.authenticate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Authenticates the client instance with the given email &amp; password.</p>
 <dl class="simple">
 <dt>Arguments:</dt><dd><p>email (str): The email address to authenticate with.
@@ -98,7 +98,7 @@ password (str): The password to authenticate with.</p>
 
 <dl class="py method">
 <dt id="metabasic.metabasic.Metabasic.query">
-<code class="sig-name descname">query</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/metabasic/metabasic.html#Metabasic.query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metabasic.metabasic.Metabasic.query" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">query</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>List<span class="p">[</span>Any<span class="p">]</span><span class="p">]</span><a class="reference internal" href="../_modules/metabasic/metabasic.html#Metabasic.query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metabasic.metabasic.Metabasic.query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Queries the currently selected database.</p>
 <dl class="simple">
 <dt>Arguments:</dt><dd><p>query (str): The query to run against the currently selected database.</p>
@@ -107,14 +107,14 @@ password (str): The password to authenticate with.</p>
 ConfigError: Raised if the client is unconfigured.
 Exception: Raised if an unexpected response is received.</p>
 </dd>
-<dt>Returns:</dt><dd><p>(Any): The results of the query.</p>
+<dt>Returns:</dt><dd><p>(List[List[Any]]): The results of the query.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="metabasic.metabasic.Metabasic.select_database">
-<code class="sig-name descname">select_database</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)">None</a><a class="reference internal" href="../_modules/metabasic/metabasic.html#Metabasic.select_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metabasic.metabasic.Metabasic.select_database" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">select_database</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#metabasic.metabasic.Metabasic" title="metabasic.metabasic.Metabasic">metabasic.metabasic.Metabasic</a><a class="reference internal" href="../_modules/metabasic/metabasic.html#Metabasic.select_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metabasic.metabasic.Metabasic.select_database" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start an interactive selection of available databases</p>
 <dl class="simple">
 <dt>Raises:</dt><dd><p>AuthError: Raised if the client is unauthenticated.

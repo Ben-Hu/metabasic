@@ -70,7 +70,7 @@
           <div class="body" role="main">
             
   <h1>Source code for metabasic.metabasic</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">inquirer</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -97,7 +97,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">session_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">database_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">database_id</span>
 
-<div class="viewcode-block" id="Metabasic.query"><a class="viewcode-back" href="../../metabasic/metabasic.metabasic.html#metabasic.Metabasic.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="Metabasic.query"><a class="viewcode-back" href="../../metabasic/metabasic.metabasic.html#metabasic.Metabasic.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;Queries the currently selected database.</span>
 
 <span class="sd">        Arguments:</span>
@@ -109,7 +109,7 @@
 <span class="sd">            Exception: Raised if an unexpected response is received.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            (Any): The results of the query.</span>
+<span class="sd">            (List[List[Any]]): The results of the query.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__check_auth</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__check_config</span><span class="p">()</span>
@@ -132,7 +132,7 @@
 
         <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;rows&quot;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Metabasic.authenticate"><a class="viewcode-back" href="../../metabasic/metabasic.metabasic.html#metabasic.Metabasic.authenticate">[docs]</a>    <span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Metabasic.authenticate"><a class="viewcode-back" href="../../metabasic/metabasic.metabasic.html#metabasic.Metabasic.authenticate">[docs]</a>    <span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Metabasic&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Authenticates the client instance with the given email &amp; password.</span>
 
 <span class="sd">        Arguments:</span>
@@ -149,9 +149,11 @@
         <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Metabasic.select_database"><a class="viewcode-back" href="../../metabasic/metabasic.metabasic.html#metabasic.Metabasic.select_database">[docs]</a>    <span class="k">def</span> <span class="nf">select_database</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="Metabasic.select_database"><a class="viewcode-back" href="../../metabasic/metabasic.metabasic.html#metabasic.Metabasic.select_database">[docs]</a>    <span class="k">def</span> <span class="nf">select_database</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Metabasic&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Start an interactive selection of available databases</span>
 
 <span class="sd">        Raises:</span>
@@ -175,7 +177,9 @@
         <span class="n">prompt</span> <span class="o">=</span> <span class="p">[</span><span class="n">inquirer</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Database&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">databases</span><span class="o">.</span><span class="n">keys</span><span class="p">())]</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">inquirer</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">database_id</span> <span class="o">=</span> <span class="n">databases</span><span class="p">[</span><span class="n">target</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">database_id</span> <span class="o">=</span> <span class="n">databases</span><span class="p">[</span><span class="n">target</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
 
     <span class="k">def</span> <span class="nf">__check_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span><span class="p">:</span>

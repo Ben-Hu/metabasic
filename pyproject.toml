@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "metabasic"
-version = "0.2.0"
+version = "0.3.0"
 description = "Dead simple client for interacting with the Metabase dataset API"
 authors = ["Ben-Hu <benjqh@gmail.com>"]
 license = "MIT"
