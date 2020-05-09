@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>metabasic.metabasic module &#8212; Metabasic 0.1.0 documentation</title>
+    <title>metabasic.metabasic module &#8212; Metabasic 0.2.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,7 +14,7 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="metabasic package" href="metabasic.html" />
+    <link rel="prev" title="metabasic.exceptions module" href="metabasic.exceptions.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -76,20 +76,52 @@
 <dt id="metabasic.metabasic.Metabasic">
 <em class="property">class </em><code class="sig-prename descclassname">metabasic.metabasic.</code><code class="sig-name descname">Metabasic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">domain</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></span></em>, <em class="sig-param"><span class="n">session_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">database_id</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/metabasic/metabasic.html#Metabasic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metabasic.metabasic.Metabasic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Instantiates a new Metabasic Client</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>domain (str): The domain of the metabase host (i.e. <a class="reference external" href="http://my-metabase-host.com">http://my-metabase-host.com</a>)
+session_id (Optional[str]): The metabase session id.
+database_id (Optional[int]): The metabase database id.</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="metabasic.metabasic.Metabasic.authenticate">
 <code class="sig-name descname">authenticate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">email</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></span></em>, <em class="sig-param"><span class="n">password</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)">None</a><a class="reference internal" href="../_modules/metabasic/metabasic.html#Metabasic.authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metabasic.metabasic.Metabasic.authenticate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Authenticates the client instance with the given email &amp; password.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>email (str): The email address to authenticate with.
+password (str): The password to authenticate with.</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception: Raised if an unexpected response is received.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="metabasic.metabasic.Metabasic.query">
 <code class="sig-name descname">query</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/metabasic/metabasic.html#Metabasic.query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metabasic.metabasic.Metabasic.query" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Queries the currently selected database.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>query (str): The query to run against the currently selected database.</p>
+</dd>
+<dt>Raises:</dt><dd><p>AuthError: Raised if the client is unauthenticated.
+ConfigError: Raised if the client is unconfigured.
+Exception: Raised if an unexpected response is received.</p>
+</dd>
+<dt>Returns:</dt><dd><p>(Any): The results of the query.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="metabasic.metabasic.Metabasic.select_database">
 <code class="sig-name descname">select_database</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)">None</a><a class="reference internal" href="../_modules/metabasic/metabasic.html#Metabasic.select_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metabasic.metabasic.Metabasic.select_database" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Start an interactive selection of available databases</p>
+<dl class="simple">
+<dt>Raises:</dt><dd><p>AuthError: Raised if the client is unauthenticated.
+Exception: Raised if an unexpected response is received.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

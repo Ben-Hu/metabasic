@@ -4,6 +4,7 @@ import pytest
 from requests import Response
 
 from metabasic import Metabasic
+from metabasic.exceptions import AuthError, ConfigError
 
 
 class TestQuery:
@@ -27,6 +28,18 @@ class TestQuery:
         mocker.patch("requests.post", return_value=mock_response)
 
         with pytest.raises(Exception, match=str(mock_response)):
+            metabasic.query("SELECT * FROM tests")
+
+    def test_unconfigured(self, mocker):
+        metabasic = Metabasic("domain", session_id="123abc")
+
+        with pytest.raises(Exception, match=str(ConfigError())):
+            metabasic.query("SELECT * FROM tests")
+
+    def test_unauthenticated(self, mocker):
+        metabasic = Metabasic("domain", database_id=123)
+
+        with pytest.raises(Exception, match=str(AuthError())):
             metabasic.query("SELECT * FROM tests")
 
 
@@ -75,4 +88,10 @@ class TestSelectDatabase:
         mocker.patch("requests.get", return_value=mock_response)
 
         with pytest.raises(Exception, match=str(mock_response)):
+            metabasic.select_database()
+
+    def test_unauthenticated(self, mocker):
+        metabasic = Metabasic("domain", database_id=123)
+
+        with pytest.raises(Exception, match=str(AuthError())):
             metabasic.select_database()

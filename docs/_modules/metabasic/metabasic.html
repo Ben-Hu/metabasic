@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>metabasic.metabasic &#8212; Metabasic 0.1.0 documentation</title>
+    <title>metabasic.metabasic &#8212; Metabasic 0.2.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -72,12 +72,21 @@
   <h1>Source code for metabasic.metabasic</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 
+<span class="kn">import</span> <span class="nn">inquirer</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="kn">import</span> <span class="nn">inquirer</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">AuthError</span><span class="p">,</span> <span class="n">ConfigError</span>
 
 
 <div class="viewcode-block" id="Metabasic"><a class="viewcode-back" href="../../metabasic/metabasic.metabasic.html#metabasic.Metabasic">[docs]</a><span class="k">class</span> <span class="nc">Metabasic</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Instantiates a new Metabasic Client</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        domain (str): The domain of the metabase host (i.e. http://my-metabase-host.com)</span>
+<span class="sd">        session_id (Optional[str]): The metabase session id.</span>
+<span class="sd">        database_id (Optional[int]): The metabase database id.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -89,6 +98,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">database_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">database_id</span>
 
 <div class="viewcode-block" id="Metabasic.query"><a class="viewcode-back" href="../../metabasic/metabasic.metabasic.html#metabasic.Metabasic.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Queries the currently selected database.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            query (str): The query to run against the currently selected database.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AuthError: Raised if the client is unauthenticated.</span>
+<span class="sd">            ConfigError: Raised if the client is unconfigured.</span>
+<span class="sd">            Exception: Raised if an unexpected response is received.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (Any): The results of the query.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__check_auth</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__check_config</span><span class="p">()</span>
+
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
             <span class="s2">&quot;X-Metabase-Session&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span><span class="p">,</span>
@@ -108,6 +133,15 @@
         <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;rows&quot;</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Metabasic.authenticate"><a class="viewcode-back" href="../../metabasic/metabasic.metabasic.html#metabasic.Metabasic.authenticate">[docs]</a>    <span class="k">def</span> <span class="nf">authenticate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Authenticates the client instance with the given email &amp; password.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            email (str): The email address to authenticate with.</span>
+<span class="sd">            password (str): The password to authenticate with.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception: Raised if an unexpected response is received.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
         <span class="n">body</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">password</span><span class="p">}</span>
         <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="si">}</span><span class="s2">/api/session&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
@@ -118,6 +152,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Metabasic.select_database"><a class="viewcode-back" href="../../metabasic/metabasic.metabasic.html#metabasic.Metabasic.select_database">[docs]</a>    <span class="k">def</span> <span class="nf">select_database</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Start an interactive selection of available databases</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AuthError: Raised if the client is unauthenticated.</span>
+<span class="sd">            Exception: Raised if an unexpected response is received.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__check_auth</span><span class="p">()</span>
+
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
             <span class="s2">&quot;X-Metabase-Session&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span><span class="p">,</span>
@@ -133,7 +175,21 @@
         <span class="n">prompt</span> <span class="o">=</span> <span class="p">[</span><span class="n">inquirer</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Database&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">databases</span><span class="o">.</span><span class="n">keys</span><span class="p">())]</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">inquirer</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">database_id</span> <span class="o">=</span> <span class="n">databases</span><span class="p">[</span><span class="n">target</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">database_id</span> <span class="o">=</span> <span class="n">databases</span><span class="p">[</span><span class="n">target</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span></div>
+
+    <span class="k">def</span> <span class="nf">__check_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AuthError</span><span class="p">(</span>
+                <span class="s2">&quot;Client is unauthenticated.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Provide a session_id or start a new session with the authenticate method.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__check_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">database_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigError</span><span class="p">(</span>
+                <span class="s2">&quot;Client is not configured&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Provide a database_id or select a one with the select_database method.&quot;</span><span class="p">,</span>
+            <span class="p">)</span></div>
 </pre></div>
 
           </div>
