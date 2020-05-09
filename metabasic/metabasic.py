@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 import inquirer
 import requests
@@ -25,7 +25,7 @@ class Metabasic(object):
         self.session_id: Optional[str] = session_id
         self.database_id: Optional[int] = database_id
 
-    def query(self, query: str):
+    def query(self, query: str) -> List[List[Any]]:
         """Queries the currently selected database.
 
         Arguments:
@@ -37,7 +37,7 @@ class Metabasic(object):
             Exception: Raised if an unexpected response is received.
 
         Returns:
-            (Any): The results of the query.
+            (List[List[Any]]): The results of the query.
         """
         self.__check_auth()
         self.__check_config()
