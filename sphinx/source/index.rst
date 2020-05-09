@@ -14,9 +14,6 @@ Dead simple client for interacting with the Metabase dataset API
 .. image :: https://img.shields.io/lgtm/grade/python/g/Ben-Hu/metabasic.svg?logo=lgtm&logoWidth=18
   :target: https://lgtm.com/projects/g/Ben-Hu/metabasic/context:Python
 
-.. image :: https://img.shields.io/badge/code%20style-black-000000.svg
-  :target: https://github.com/psf/black
-
 .. image :: https://img.shields.io/github/license/Ben-Hu/metabasic
   :target: https://github.com/Ben-Hu/metabasic/blob/master/LICENSE
 

@@ -2,7 +2,6 @@
 [![Actions](https://github.com/Ben-Hu/metabasic/workflows/ci/badge.svg)](https://github.com/Ben-Hu/metabasic/actions)
 [![codecov](https://codecov.io/gh/Ben-Hu/metabasic/branch/master/graph/badge.svg)](https://codecov.io/gh/Ben-Hu/metabasic)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/Ben-Hu/metabasic.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Ben-Hu/metabasic/context:python)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License](https://img.shields.io/github/license/Ben-Hu/metabasic)](https://github.com/Ben-Hu/metabasic/blob/master/LICENSE)
 [![Tag](https://img.shields.io/github/v/tag/Ben-Hu/metabasic)](https://github.com/Ben-Hu/metabasic/releases)
 [![PyPI](https://img.shields.io/pypi/v/metabasic?color=blue)](https://pypi.org/project/metabasic/)

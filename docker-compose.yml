@@ -3,6 +3,7 @@ version: "3.7"
 services:
   metabase:
     image: metabase/metabase:v0.35.3
+    container_name: metabasic_metabase
     environment:
       - MB_DB_TYPE=postgres
       - MB_DB_PORT=5432
@@ -14,12 +15,19 @@ services:
 
   postgres:
     image: postgres:12-alpine
+    container_name: metabasic_postgres
     environment:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - postgres-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+
+  client:
+    build: .
+    container_name: metabasic_client
+    stdin_open: true
+    tty: true
 
 volumes:
   postgres-data:
