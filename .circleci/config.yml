@@ -1,0 +1,57 @@
+version: 2.1
+
+orbs:
+  codecov: codecov/codecov@1.0.4
+
+references:
+  python: &python circleci/python:3.7.5
+
+  deps_cache_base_key: &deps_cache_base_key deps-cache
+  deps_cache_lockfile_key: &deps_cache_lockfile_key deps-cache-{{ checksum "poetry.lock" }}
+
+  deps_cache_paths: &deps_cache_paths
+    - ~/.cache/pip/
+    - ~/.cache/pypoetry/
+
+  save_deps_cache_base: &save_deps_cache_base
+    save_cache:
+      key: *deps_cache_base_key
+      paths: *deps_cache_paths
+
+  save_deps_cache_lockfile: &save_deps_cache_lockfile
+    save_cache:
+      key: *deps_cache_lockfile_key
+      paths: *deps_cache_paths
+
+  restore_deps_cache: &restore_deps_cache
+    restore_cache:
+      keys:
+        - *deps_cache_lockfile_key
+        - *deps_cache_base_key
+
+jobs:
+  check_code:
+    docker:
+      - image: *python
+    steps:
+      - checkout
+      - *restore_deps_cache
+      - run:
+          name: Init
+          command: make init
+      - *save_deps_cache_base
+      - *save_deps_cache_lockfile
+      - run:
+          name: Lint
+          command: make lint
+      - run:
+          name: Test
+          command: make coverage
+      - codecov/upload:
+          file: coverage/cover.xml
+
+workflows:
+  version: 2
+  primary:
+    jobs:
+      - check_code

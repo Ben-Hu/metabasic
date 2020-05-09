@@ -1,0 +1,11 @@
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+.coverage
+coverage/
+dist/
+*.egg-info/
+.tox/
+.python-version
+sphinx/build/
+.vscode/

@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Metabasic &#8212; Metabasic 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="metabasic" href="metabasic/modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Metabasic</a></h1>
+
+
+
+<p class="blurb">Dead simple client for interacting with the Metabase dataset API</br></br></br></p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="metabasic/modules.html">metabasic</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href=""></br></a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="metabasic">
+<h1>Metabasic<a class="headerlink" href="#metabasic" title="Permalink to this headline">¶</a></h1>
+<p>Dead simple client for interacting with the Metabase dataset API</p>
+<a class="reference external image-reference" href="https://circleci.com/gh/Ben-Hu/metabasic"><img alt="https://circleci.com/gh/Ben-Hu/metabasic.svg?style=svg" src="https://circleci.com/gh/Ben-Hu/metabasic.svg?style=svg" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/Ben-Hu/metabasic"><img alt="https://codecov.io/gh/Ben-Hu/metabasic/branch/master/graph/badge.svg" src="https://codecov.io/gh/Ben-Hu/metabasic/branch/master/graph/badge.svg" /></a>
+<a class="reference external image-reference" href="https://lgtm.com/projects/g/Ben-Hu/metabasic/context:Python"><img alt="https://img.shields.io/lgtm/grade/python/g/Ben-Hu/metabasic.svg?logo=lgtm&amp;logoWidth=18" src="https://img.shields.io/lgtm/grade/python/g/Ben-Hu/metabasic.svg?logo=lgtm&amp;logoWidth=18" /></a>
+<a class="reference external image-reference" href="https://github.com/psf/black"><img alt="https://img.shields.io/badge/code%20style-black-000000.svg" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/Ben-Hu/metabasic/blob/master/LICENSE"><img alt="https://img.shields.io/github/license/Ben-Hu/metabasic" src="https://img.shields.io/github/license/Ben-Hu/metabasic" /></a>
+<a class="reference external image-reference" href="https://github.com/Ben-Hu/metabasic/releases"><img alt="https://img.shields.io/github/v/tag/Ben-Hu/metabasic" src="https://img.shields.io/github/v/tag/Ben-Hu/metabasic" /></a>
+<a class="reference external image-reference" href="https://pypi.org/project/metabasic"><img alt="https://img.shields.io/pypi/v/metabasic?color=blue" src="https://img.shields.io/pypi/v/metabasic?color=blue" /></a>
+<div class="section" id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">metabasic</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">metabasic</span> <span class="kn">import</span> <span class="n">Metabasic</span>
+<span class="n">domain</span> <span class="o">=</span> <span class="s2">&quot;https://my-metabase-domain.com&quot;</span>
+
+<span class="c1"># Authentication with an existing session</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">Metabasic</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span> <span class="n">database_id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM bar&quot;</span><span class="p">)</span>
+
+<span class="c1"># Email/Password authentication</span>
+<span class="n">ga</span> <span class="o">=</span> <span class="n">Metabasic</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">database_id</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ga</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="s2">&quot;foo@email.com&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">)</span>
+<span class="n">ga_query</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ids&quot;</span><span class="p">:</span> <span class="s2">&quot;ga:1234567890&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;start-date&quot;</span><span class="p">:</span> <span class="s2">&quot;30daysAgo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;end-date&quot;</span><span class="p">:</span> <span class="s2">&quot;today&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;metrics&quot;</span><span class="p">:</span> <span class="s2">&quot;ga:someMetric&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dimensions&quot;</span><span class="p">:</span> <span class="s2">&quot;ga:someDimension&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sort&quot;</span><span class="p">:</span> <span class="s2">&quot;ga:someDimension&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;max-results&quot;</span><span class="p">:</span> <span class="mi">10000</span>
+<span class="p">)</span>
+<span class="n">ga</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">ga_query</span><span class="p">))</span>
+
+<span class="c1"># Select a database interactively</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">Metabasic</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">select_database</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2020, Ben Hu.
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/Ben-Hu/metabasic" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
