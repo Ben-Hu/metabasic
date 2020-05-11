@@ -2,6 +2,7 @@ from typing import Any, Dict, Optional
 
 import inquirer
 import requests
+
 from pandas import DataFrame
 
 from .exceptions import AuthError, ConfigError
@@ -62,13 +63,13 @@ class Metabasic(object):
         return resp.json()["data"]
 
     def get_dataframe(self, query: str) -> DataFrame:
-        """Queries the currently selected database.
+        """Queries the currently selected database, returning a Pandas DataFrame.
 
         Arguments:
             query (str): The query to run against the currently selected database.
 
         Returns:
-            pd.DataFrame: The results of the query wrapped into a Pandas Datarame.
+            pd.DataFrame: The results of the query wrapped into a Pandas DataFrame.
         """
 
         res = self.query(query)

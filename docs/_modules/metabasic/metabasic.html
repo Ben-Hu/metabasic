@@ -74,6 +74,7 @@
 
 <span class="kn">import</span> <span class="nn">inquirer</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+
 <span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
 
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">AuthError</span><span class="p">,</span> <span class="n">ConfigError</span>
@@ -134,13 +135,13 @@
         <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Metabasic.get_dataframe"><a class="viewcode-back" href="../../metabasic/metabasic.metabasic.html#metabasic.Metabasic.get_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">get_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Queries the currently selected database.</span>
+        <span class="sd">&quot;&quot;&quot;Queries the currently selected database, returning a Pandas DataFrame.</span>
 
 <span class="sd">        Arguments:</span>
 <span class="sd">            query (str): The query to run against the currently selected database.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            pd.DataFrame: The results of the query wrapped into a Pandas Datarame.</span>
+<span class="sd">            pd.DataFrame: The results of the query wrapped into a Pandas DataFrame.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>

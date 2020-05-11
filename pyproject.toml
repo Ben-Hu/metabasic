@@ -1,12 +1,13 @@
 [tool.poetry]
 name = "metabasic"
-version = "0.4.0"
+version = "0.4.1"
 description = "Dead simple client for interacting with the Metabase dataset API"
 authors = ["Ben-Hu <benjqh@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/Ben-Hu/metabasic"
 repository = "https://github.com/Ben-Hu/metabasic"
+documentation = "https://ben-hu.com/metabasic"
 include = ["metabasic/py.typed"]
 
 [tool.poetry.dependencies]

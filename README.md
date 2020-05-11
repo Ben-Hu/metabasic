@@ -23,7 +23,7 @@ domain = "https://my-metabase-domain.com"
 # Authentication with an existing session
 db = Metabasic(domain, session_id="foo", database_id=1)
 db.query("SELECT * FROM bar")
-ga.get_dataframe("SELECT * FROM bar")
+db.get_dataframe("SELECT * FROM bar")
 
 # Email/Password authentication
 ga = Metabasic(domain, database_id=2).authenticate("foo@email.com", "password")
