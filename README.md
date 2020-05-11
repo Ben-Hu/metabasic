@@ -21,7 +21,7 @@ from metabasic import Metabasic
 domain = "https://my-metabase-domain.com"
 
 # Authentication with an existing session
-db = Metabasic(domain, session_id="foo" database_id=1)
+db = Metabasic(domain, session_id="foo", database_id=1)
 db.query("SELECT * FROM bar")
 
 # Email/Password authentication
@@ -34,8 +34,10 @@ ga_query = {
     "dimensions": "ga:someDimension",
     "sort": "ga:someDimension",
     "max-results": 10000
-)
+}
 ga.query(json.dumps(ga_query))
+
+ga.get_dataframe("SELECT * FROM bar")
 
 # Select a database interactively
 m = (

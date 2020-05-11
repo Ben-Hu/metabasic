@@ -1,7 +1,8 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import inquirer
 import requests
+from pandas import DataFrame
 
 from .exceptions import AuthError, ConfigError
 
@@ -25,7 +26,7 @@ class Metabasic(object):
         self.session_id: Optional[str] = session_id
         self.database_id: Optional[int] = database_id
 
-    def query(self, query: str) -> List[List[Any]]:
+    def query(self, query: str) -> Dict[Any, Any]:
         """Queries the currently selected database.
 
         Arguments:
@@ -58,7 +59,23 @@ class Metabasic(object):
         if resp.status_code != 202:
             raise Exception(resp)
 
-        return resp.json()["data"]["rows"]
+        return resp.json()["data"]
+
+    def get_dataframe(self, query: str) -> DataFrame:
+        """Queries the currently selected database.
+
+        Arguments:
+            query (str): The query to run against the currently selected database.
+
+        Returns:
+            pd.DataFrame: The results of the query wrapped into a Pandas Datarame.
+        """
+
+        res = self.query(query)
+
+        df = DataFrame(res["rows"], columns=[i["name"] for i in res["cols"]])
+
+        return df
 
     def authenticate(self, email: str, password: str) -> "Metabasic":
         """Authenticates the client instance with the given email & password.

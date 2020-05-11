@@ -20,7 +20,7 @@ class TestQuery:
         mock_response.status_code = 202
         mocker.patch("requests.post", return_value=mock_response)
 
-        assert metabasic.query("SELECT * FROM tests") == rows
+        assert metabasic.query("SELECT * FROM tests") == {"rows": rows}
 
     def test_query_error(self, mocker, metabasic):
         mock_response = Mock(Response)
