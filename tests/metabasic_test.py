@@ -1,6 +1,7 @@
 from unittest.mock import Mock
 
 import pytest
+from pandas import DataFrame
 from requests import Response
 
 from metabasic import Metabasic
@@ -41,6 +42,46 @@ class TestQuery:
 
         with pytest.raises(Exception, match=str(AuthError())):
             metabasic.query("SELECT * FROM tests")
+
+
+class TestGetDataFrame:
+    @pytest.fixture
+    def metabasic(self):
+        return Metabasic("domain", session_id="123abc", database_id=123)
+
+    def test_get_dataframe_success(self, mocker, metabasic):
+        rows = [["a", 1], ["b", 2], ["c", 3]]
+        cols = [{"name": "name"}, {"name": "id"}]
+        json = {"data": {"rows": rows, "cols": cols}}
+        mock_response = Mock(Response, json=lambda: json)
+        mock_response.status_code = 202
+
+        mocker.patch("requests.post", return_value=mock_response)
+        expected = DataFrame(rows, columns=[col["name"] for col in cols])
+
+        result = metabasic.get_dataframe("SELECT * FROM tests")
+        assert isinstance(result, DataFrame)
+        assert result.to_dict() == expected.to_dict()
+
+    def test_get_dataframe_error(self, mocker, metabasic):
+        mock_response = Mock(Response)
+        mock_response.status_code = 401
+        mocker.patch("requests.post", return_value=mock_response)
+
+        with pytest.raises(Exception, match=str(mock_response)):
+            metabasic.get_dataframe("SELECT * FROM tests")
+
+    def test_unconfigured(self, mocker):
+        metabasic = Metabasic("domain", session_id="123abc")
+
+        with pytest.raises(Exception, match=str(ConfigError())):
+            metabasic.get_dataframe("SELECT * FROM tests")
+
+    def test_unauthenticated(self, mocker):
+        metabasic = Metabasic("domain", database_id=123)
+
+        with pytest.raises(Exception, match=str(AuthError())):
+            metabasic.get_dataframe("SELECT * FROM tests")
 
 
 class TestAuthenticate:
