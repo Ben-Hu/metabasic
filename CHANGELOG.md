@@ -1,3 +1,7 @@
+# 0.4.2 (2020-06-24)
+### Enhancements
+  - Adding use of api/dataset/json to circumvent metabase row limit of 2000
+
 # 0.4.0 (2020-05-11)
 ### Enhancements
   - Adds get_dataframe utility method, returning a pandas DataFrame

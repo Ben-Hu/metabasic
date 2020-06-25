@@ -14,14 +14,15 @@ class TestQuery:
         return Metabasic("domain", session_id="123abc", database_id=123)
 
     def test_query_success(self, mocker, metabasic):
-        rows = [["a", 1], ["b", 2], ["c", 3]]
-        json = {"data": {"rows": rows}}
+        json = [{"a": 1}, {"b": 2}, {"c": 3}]
 
         mock_response = Mock(Response, json=lambda: json)
         mock_response.status_code = 202
         mocker.patch("requests.post", return_value=mock_response)
 
-        assert metabasic.query("SELECT * FROM tests") == {"rows": rows}
+        print(metabasic.query("SELECT * FROM tests"))
+
+        assert metabasic.query("SELECT * FROM tests") == json
 
     def test_query_error(self, mocker, metabasic):
         mock_response = Mock(Response)
@@ -50,14 +51,13 @@ class TestGetDataFrame:
         return Metabasic("domain", session_id="123abc", database_id=123)
 
     def test_get_dataframe_success(self, mocker, metabasic):
-        rows = [["a", 1], ["b", 2], ["c", 3]]
-        cols = [{"name": "name"}, {"name": "id"}]
-        json = {"data": {"rows": rows, "cols": cols}}
+        json = [{"a": 1, "b": 2, "c": 3}, {"a": 4, "b": 5, "c": 6}]
+
         mock_response = Mock(Response, json=lambda: json)
         mock_response.status_code = 202
 
         mocker.patch("requests.post", return_value=mock_response)
-        expected = DataFrame(rows, columns=[col["name"] for col in cols])
+        expected = DataFrame(json)
 
         result = metabasic.get_dataframe("SELECT * FROM tests")
         assert isinstance(result, DataFrame)
