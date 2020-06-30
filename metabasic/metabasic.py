@@ -1,10 +1,11 @@
+import io
 import json
 import urllib.parse
 from typing import Any, Dict, Optional
 
 import inquirer
 import requests
-from pandas import DataFrame
+import pandas as pd
 
 from .exceptions import AuthError, ConfigError
 
@@ -42,6 +43,26 @@ class Metabasic(object):
         Returns:
             (List[List[Any]]): The results of the query.
         """
+        resp = self.raw_query(query, export_format='json')
+        return resp.json()
+
+    def raw_query(self, query: str, export_format: str) -> requests.Response:
+        """Queries the currently selected database whose results should be in
+        the specified export format.
+
+        Arguments:
+            query (str): The query to run against the currently selected database.
+            export_format (str): Use one of "json", "csv", "xlsx" to retrieve the result
+                                 dataset in the specified format.
+
+        Raises:
+            AuthError: Raised if the client is unauthenticated.
+            ConfigError: Raised if the client is unconfigured.
+            Exception: Raised if an unexpected response is received.
+
+        Returns:
+            requests.Response: The response of the /api/dataset/{export_format} request.
+        """
         self.__check_auth()
         self.__check_config()
 
@@ -58,16 +79,16 @@ class Metabasic(object):
 
         data = "query=" + urllib.parse.quote(json.dumps(body))
 
-        resp = requests.post(
-            f"{self.domain}/api/dataset/json", data=data, headers=headers
+        resp: requests.Response = requests.post(
+            f"{self.domain}/api/dataset/{export_format}", data=data, headers=headers
         )
 
         if resp.status_code != 202:
             raise Exception(resp)
 
-        return resp.json()
+        return resp
 
-    def get_dataframe(self, query: str) -> DataFrame:
+    def get_dataframe(self, query: str) -> pd.DataFrame:
         """Queries the currently selected database, returning a Pandas DataFrame.
 
         Arguments:
@@ -76,11 +97,12 @@ class Metabasic(object):
         Returns:
             pd.DataFrame: The results of the query wrapped into a Pandas DataFrame.
         """
-
-        res = self.query(query)
-
-        df = DataFrame(res)
-
+        # Request csv export format so that don't lose the column order as specified
+        # in the query. The json format does not always return the results in order,
+        # and simple '/api/dataset/' requests do not return more than 2000 rows.
+        res = self.raw_query(query, export_format='csv')
+        buffer = io.BytesIO(res.content)
+        df = pd.read_csv(buffer)
         return df
 
     def authenticate(self, email: str, password: str) -> "Metabasic":

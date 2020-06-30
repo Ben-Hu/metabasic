@@ -1,3 +1,10 @@
+# 0.X.Y (2020-MM-DD)
+### Enhancements
+  - Adding `raw_query(query, export_format)` to retrieve responses in one of the supported export formats for `/api/dataset/{export_format}` (`csv`, `json`, `xslx`)
+
+### Bug fix
+  - `get_dataframe` uses `raw_query` with `export_format="csv"` to guarantee that the result set has a column ordering equal to the ordering specified by the query statement
+
 # 0.4.2 (2020-06-24)
 ### Enhancements
   - Adding use of api/dataset/json to circumvent metabase row limit of 2000

@@ -1,7 +1,8 @@
+import io
 from unittest.mock import Mock
 
 import pytest
-from pandas import DataFrame
+import pandas as pd
 from requests import Response
 
 from metabasic import Metabasic
@@ -51,16 +52,16 @@ class TestGetDataFrame:
         return Metabasic("domain", session_id="123abc", database_id=123)
 
     def test_get_dataframe_success(self, mocker, metabasic):
-        json = [{"a": 1, "b": 2, "c": 3}, {"a": 4, "b": 5, "c": 6}]
+        csv = b'a,b,c\n1,2,3\n4,5,6'
 
-        mock_response = Mock(Response, json=lambda: json)
+        mock_response = Mock(Response, content=csv)
         mock_response.status_code = 202
 
         mocker.patch("requests.post", return_value=mock_response)
-        expected = DataFrame(json)
+        expected = pd.read_csv(io.BytesIO(csv))
 
         result = metabasic.get_dataframe("SELECT * FROM tests")
-        assert isinstance(result, DataFrame)
+        assert isinstance(result, pd.DataFrame)
         assert result.to_dict() == expected.to_dict()
 
     def test_get_dataframe_error(self, mocker, metabasic):
