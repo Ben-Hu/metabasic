@@ -1,4 +1,4 @@
-# 0.X.Y (2020-MM-DD)
+# 0.5.0 (2020-06-30)
 ### Enhancements
   - Adding `raw_query(query, export_format)` to retrieve responses in one of the supported export formats for `/api/dataset/{export_format}` (`csv`, `json`, `xslx`)
 
