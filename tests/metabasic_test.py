@@ -1,8 +1,8 @@
 import io
 from unittest.mock import Mock
 
-import pytest
 import pandas as pd
+import pytest
 from requests import Response
 
 from metabasic import Metabasic
@@ -20,8 +20,6 @@ class TestQuery:
         mock_response = Mock(Response, json=lambda: json)
         mock_response.status_code = 202
         mocker.patch("requests.post", return_value=mock_response)
-
-        print(metabasic.query("SELECT * FROM tests"))
 
         assert metabasic.query("SELECT * FROM tests") == json
 
@@ -52,7 +50,7 @@ class TestGetDataFrame:
         return Metabasic("domain", session_id="123abc", database_id=123)
 
     def test_get_dataframe_success(self, mocker, metabasic):
-        csv = b'a,b,c\n1,2,3\n4,5,6'
+        csv = b"a,b,c\n1,2,3\n4,5,6"
 
         mock_response = Mock(Response, content=csv)
         mock_response.status_code = 202

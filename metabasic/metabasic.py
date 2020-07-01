@@ -4,8 +4,8 @@ import urllib.parse
 from typing import Any, Dict, Optional
 
 import inquirer
-import requests
 import pandas as pd
+import requests
 
 from .exceptions import AuthError, ConfigError
 
@@ -43,7 +43,7 @@ class Metabasic(object):
         Returns:
             (List[List[Any]]): The results of the query.
         """
-        resp = self.raw_query(query, export_format='json')
+        resp = self.raw_query(query, export_format="json")
         return resp.json()
 
     def raw_query(self, query: str, export_format: str) -> requests.Response:
@@ -100,7 +100,7 @@ class Metabasic(object):
         # Request csv export format so that don't lose the column order as specified
         # in the query. The json format does not always return the results in order,
         # and simple '/api/dataset/' requests do not return more than 2000 rows.
-        res = self.raw_query(query, export_format='csv')
+        res = self.raw_query(query, export_format="csv")
         buffer = io.BytesIO(res.content)
         df = pd.read_csv(buffer)
         return df
